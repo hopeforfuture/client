@@ -3,9 +3,11 @@ import Navbar from "../../components/Layout/Navbar";
 import PopModal from "../../components/PopModal";
 import TodoService from "./../../Services/TodoService";
 import Card from "../../components/Card/Card";
+import Spinner from "../../components/Spinner";
 
 const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [allTasks, setAllTasks] = useState([]);
@@ -19,12 +21,15 @@ const HomePage = () => {
   const id = userData?.user?.id;
 
   const getUserTask = async () => {
+    setLoading(true);
     try {
       const { data } = await TodoService.getAllTodo(id);
       console.log(data);
       setAllTasks(data?.todos);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +49,11 @@ const HomePage = () => {
           </button>
         </div>
 
-        {allTasks && <Card tasks={allTasks} refreshTodos={getUserTask} />}
+        {loading ? (
+          <Spinner />
+        ) : (
+          allTasks && <Card tasks={allTasks} refreshTodos={getUserTask} />
+        )}
 
         <PopModal
           showModal={showModal}
@@ -53,6 +62,7 @@ const HomePage = () => {
           setTitle={setTitle}
           description={description}
           setDescription={setDescription}
+          refreshTodos={getUserTask}
         />
       </div>
     </>

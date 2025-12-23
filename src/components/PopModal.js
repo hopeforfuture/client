@@ -9,6 +9,7 @@ const PopModal = ({
   setTitle,
   description,
   setDescription,
+  refreshTodos,
 }) => {
   //handle close
   const handleClose = () => {
@@ -31,6 +32,7 @@ const PopModal = ({
       toast.success("Task created successfully");
       setTitle("");
       setDescription("");
+      refreshTodos();
     } catch (error) {
       toast.error(error);
     }
