@@ -21,6 +21,7 @@ const HomePage = () => {
   const id = userData?.user?.id;
 
   const getUserTask = async () => {
+    if (!id) return;
     setLoading(true);
     try {
       const { data } = await TodoService.getAllTodo(id);
@@ -35,7 +36,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getUserTask();
-  }, []);
+  }, [id]);
 
   return (
     <>

@@ -3,9 +3,11 @@ import EditTodo from "../../components/EditTodo";
 import TodoService from "./../../Services/TodoService";
 import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
+import DeleteModalBox from "../DeleteModalBox";
 
 const Card = ({ tasks, refreshTodos }) => {
   const [selectedTask, setSelectedTask] = useState(null);
+  const [deleteTaskId, setDeleteTaskId] = useState(null);
 
   const handleEdit = (task) => {
     setSelectedTask(task);
@@ -70,7 +72,7 @@ const Card = ({ tasks, refreshTodos }) => {
                   <button
                     className="btn btn-danger ms-2"
                     title="DELETE TASK"
-                    onClick={() => handleDelete(task?._id)}
+                    onClick={() => setDeleteTaskId(task._id)}
                   >
                     <i className="fa-regular fa-trash-can"></i>
                   </button>
@@ -88,6 +90,12 @@ const Card = ({ tasks, refreshTodos }) => {
             refreshTodos={refreshTodos}
           />
         )}
+
+        <DeleteModalBox
+          deleteTaskId={deleteTaskId}
+          setDeleteTaskId={setDeleteTaskId}
+          handleDelete={handleDelete}
+        />
       </div>
     </>
   );

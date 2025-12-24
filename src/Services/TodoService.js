@@ -4,7 +4,7 @@ import axios from "axios";
 const user = JSON.parse(localStorage.getItem("todoapp"));
 
 //default auth header
-axios.defaults.headers.common["Authorization"] = `bearer ${user.token}`;
+axios.defaults.headers.common["Authorization"] = `bearer ${user?.token}`;
 
 //CREATE TODO
 const createTodo = (data) => {
